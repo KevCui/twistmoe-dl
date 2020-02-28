@@ -62,4 +62,4 @@ Check out this script [tvdb-cli](https://github.com/KevCui/tvdb-cli)
 
 ## Disclaimer
 
-Please do NOT copy or distribute downloaded files to any third party. Watch then delete. Please use this script at your own responsibility.
+The purpose of this script is to download anime episodes in order to watch them later in case when Internet is not available. Please do NOT copy or distribute downloaded anime episodes to any third party. Watch them and delete them afterwards. Please use this script at your own responsibility.
