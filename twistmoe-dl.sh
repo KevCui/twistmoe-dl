@@ -67,8 +67,7 @@ check_var() {
 
 download_anime_list() {
     $_CURL -sS "$_API_URL" -H "x-access-token: $_ACCESS_TOKEN" \
-        | $_JQ -r '.[] | "\(.title)+++\(.slug.slug)"' \
-        | column -t -s '+++' > "$_ANIME_LIST_FILE"
+        | $_JQ -r '.[] | "[\(.slug.slug)] \(.title)\(if .alt_title != null then " (\(.alt_title))" else "" end)"' > "$_ANIME_LIST_FILE"
 }
 
 download_source() {
