@@ -56,7 +56,7 @@ Options:
 ~$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 2,3,4
 ```
 
-### What to know when new episode got released?
+### What to know when the new episode of your favorite anime will be released?
 
 Check out this script [tvdb-cli](https://github.com/KevCui/tvdb-cli)
 
