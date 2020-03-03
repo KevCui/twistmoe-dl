@@ -80,7 +80,11 @@ get_episode_link() {
     local s
     decrypt_source
     s=$($_JQ -r '.[] | select(.number==($num | tonumber)) | .source' --arg num "$1" < "$_SCRIPT_PATH/$_ANIME_SLUG/$_SOURCE_FILE")
-    grep "$s" "$_SCRIPT_PATH/$_ANIME_SLUG/$_DECRYPTED_FILE" -A 2 | tail -1
+    if [[ "$s" == "" ]]; then
+        echo "[ERROR] Episode not found!" >&2 && exit 1
+    else
+        grep "$s" "$_SCRIPT_PATH/$_ANIME_SLUG/$_DECRYPTED_FILE" -A 2 | tail -1
+    fi
 }
 
 download_episodes() {
