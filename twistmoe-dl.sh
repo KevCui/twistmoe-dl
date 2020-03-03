@@ -105,7 +105,7 @@ download_episode() {
     fi
 
     echo "[INFO] Downloading Episode $1..."
-    $_CURL -L -o "$_SCRIPT_PATH/$_ANIME_SLUG/${_ANIME_SLUG}-${1}.mp4" "$_HOST/$l" \
+    $_CURL -L -g -o "$_SCRIPT_PATH/$_ANIME_SLUG/${_ANIME_SLUG}-${1}.mp4" "$_HOST/$l" \
         -H "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36'" \
         -H "Referer: $_HOST"
 }
