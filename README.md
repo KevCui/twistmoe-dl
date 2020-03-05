@@ -7,9 +7,7 @@ twistmoe-dl.sh is a Bash script to download anime from [twist.moe](https://twist
 
 - bin/decrypt.py: python script used to decrypt source,
 code partially taken from [anime_downloader](https://github.com/vn-ki/anime-downloader/blob/master/anime_downloader/sites/twistmoe.py)
-
 - [jq](https://stedolan.github.io/jq/)
-
 - [fzf](https://github.com/junegunn/fzf)
 
 ## How to use
