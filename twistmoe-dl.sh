@@ -3,10 +3,9 @@
 # Download anime from twist.moe using CLI
 #
 #/ Usage:
-#/   ./twistmoe-dl.sh [-l] | [-s <anime_slug>] [-e <episode_num1,num2...>]
+#/   ./twistmoe-dl.sh [-s <anime_slug>] [-e <episode_num1,num2...>]
 #/
 #/ Options:
-#/   -l                 Download a full anime list from server to $_ANIME_LIST_FILE
 #/   -s <slug>          Anime slug, can be found in $_ANIME_LIST_FILE
 #/   -e <num1,num2...>  Optional, episode number to download
 #/                      multiple episode numbers seperated by ","
@@ -23,6 +22,7 @@ set_var() {
     _SCRIPT_PATH=$(dirname "$0")
     _CURL=$(command -v curl)
     _JQ=$(command -v jq)
+    _FZF=$(command -v fzf)
     _DECRYPT_SCRIPT="$_SCRIPT_PATH/bin/decrypt.py"
 
     _HOST="https://twist.moe"
@@ -37,11 +37,8 @@ set_var() {
 
 set_args() {
     expr "$*" : ".*--help" > /dev/null && usage
-    while getopts ":hls:e:" opt; do
+    while getopts ":hs:e:" opt; do
         case $opt in
-            l)
-                _DOWNLOAD_LIST=true
-                ;;
             s)
                 _ANIME_SLUG="$OPTARG"
                 ;;
@@ -57,12 +54,6 @@ set_args() {
                 ;;
         esac
     done
-}
-
-check_var() {
-    if [[ -z "${_ANIME_SLUG:-}" && -z "${_DOWNLOAD_LIST:-}" ]]; then
-        usage
-    fi
 }
 
 download_anime_list() {
@@ -129,20 +120,21 @@ select_episodes_to_download() {
 main() {
     set_args "$@"
     set_var
-    check_var
 
-    if [[ "${_DOWNLOAD_LIST:-}" == true ]]; then
+    if [[ -z "${_ANIME_SLUG:-}" ]]; then
         download_anime_list
-    fi
-
-    if [[ -n "${_ANIME_SLUG:-}" ]]; then
-        download_source
-
-        if [[ -z "${_ANIME_EPISODE:-}" ]]; then
-            _ANIME_EPISODE=$(select_episodes_to_download)
+        if [[ ! -f "$_ANIME_LIST_FILE" ]]; then
+            echo "[ERROR] $_ANIME_LIST_FILE not found!" && exit 1
         fi
-        download_episodes "$_ANIME_EPISODE"
+        _ANIME_SLUG=$($_FZF < "$_ANIME_LIST_FILE" | awk -F']' '{print $1}' | sed -E 's/^\[//')
     fi
+
+    download_source
+
+    if [[ -z "${_ANIME_EPISODE:-}" ]]; then
+        _ANIME_EPISODE=$(select_episodes_to_download)
+    fi
+    download_episodes "$_ANIME_EPISODE"
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then

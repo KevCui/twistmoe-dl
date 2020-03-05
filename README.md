@@ -10,14 +10,15 @@ code partially taken from [anime_downloader](https://github.com/vn-ki/anime-down
 
 - [jq](https://stedolan.github.io/jq/)
 
+- [fzf](https://github.com/junegunn/fzf)
+
 ## How to use
 
 ```
 Usage:
-  ./twistmoe-dl.sh [-l] | [-s <anime_slug>] [-e <episode_num1,num2...>]
+  ./twistmoe-dl.sh [-s <anime_slug>] [-e <episode_num1,num2...>]
 
 Options:
-  -l                 Download a full anime list from server to $_ANIME_LIST_FILE
   -s <slug>          Anime slug, can be found in $_ANIME_LIST_FILE
   -e <num1,num2...>  Optional, episode number to download
                      multiple episode numbers seperated by ","
@@ -26,13 +27,13 @@ Options:
 
 ### Example
 
-- Download anime list, to `anime.list` file:
+- In case, you don't know anime slug, simply run script. Search and select the right one in fzf:
 
 ```
-~$ ./twistmoe-dl.sh -l
+~$ ./twistmoe-dl.sh
 ```
 
-- Find anime slug in `anime.list` file. Download "Attack on Titan" season 3 episode 1:
+- Download "Attack on Titan" season 3 episode 1:
 
 ```
 ~$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 3
@@ -56,6 +57,7 @@ Options:
 
 ```
 ~$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 2,3,4
+
 ```
 
 ### What to know when the new episode of your favorite anime will be released?
