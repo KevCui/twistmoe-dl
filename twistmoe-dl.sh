@@ -127,6 +127,10 @@ main() {
             echo "[ERROR] $_ANIME_LIST_FILE not found!" && exit 1
         fi
         _ANIME_SLUG=$($_FZF < "$_ANIME_LIST_FILE" | awk -F']' '{print $1}' | sed -E 's/^\[//')
+
+        if [[ "$_ANIME_SLUG" == "" ]]; then
+            exit 0
+        fi
     fi
 
     download_source
