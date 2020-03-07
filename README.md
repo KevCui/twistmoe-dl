@@ -55,8 +55,10 @@ Options:
 
 ```
 ~$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 2,3,4
-
 ```
+### Don't like twist.moe? Want an alternative?
+
+Check out [animepahe-dl](https://github.com/KevCui/animepahe-dl)
 
 ### What to know when the new episode of your favorite anime will be released?
 
