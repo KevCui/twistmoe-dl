@@ -30,9 +30,9 @@ set_var() {
     _ACCESS_TOKEN="1rj2vRtegS8Y60B3w3qNZm5T2Q0TN2NR"
 
     _ANIME_LIST_FILE="$_SCRIPT_PATH/anime.list"
-    _SOURCE_FILE="source.json"
-    _ENCRYPTED_FILE="encrypted_source.in"
-    _DECRYPTED_FILE="decrypted_source.out"
+    _SOURCE_FILE=".source.json"
+    _ENCRYPTED_FILE=".encrypted_source.in"
+    _DECRYPTED_FILE=".decrypted_source.out"
 }
 
 set_args() {
