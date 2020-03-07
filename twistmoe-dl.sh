@@ -31,8 +31,6 @@ set_var() {
 
     _ANIME_LIST_FILE="$_SCRIPT_PATH/anime.list"
     _SOURCE_FILE=".source.json"
-    _ENCRYPTED_FILE=".encrypted_source.in"
-    _DECRYPTED_FILE=".decrypted_source.out"
 }
 
 set_args() {
@@ -69,12 +67,11 @@ download_source() {
 get_episode_link() {
     # $1: episode number
     local s
-    decrypt_source
     s=$($_JQ -r '.[] | select(.number==($num | tonumber)) | .source' --arg num "$1" < "$_SCRIPT_PATH/$_ANIME_SLUG/$_SOURCE_FILE")
     if [[ "$s" == "" ]]; then
         echo "[ERROR] Episode not found!" >&2 && exit 1
     else
-        grep "$s" "$_SCRIPT_PATH/$_ANIME_SLUG/$_DECRYPTED_FILE" -A 2 | tail -1
+        decrypt_source "$s"
     fi
 }
 
@@ -106,8 +103,8 @@ download_episode() {
 }
 
 decrypt_source() {
-    $_JQ -r '.[].source' > "$_SCRIPT_PATH/$_ANIME_SLUG/$_ENCRYPTED_FILE" < "$_SCRIPT_PATH/$_ANIME_SLUG/$_SOURCE_FILE"
-    $_DECRYPT_SCRIPT -f "$_SCRIPT_PATH/$_ANIME_SLUG/$_ENCRYPTED_FILE" > "$_SCRIPT_PATH/$_ANIME_SLUG/$_DECRYPTED_FILE"
+    # $1: encrypted str
+    $_DECRYPT_SCRIPT -s "$1" | tail -1
 }
 
 select_episodes_to_download() {
