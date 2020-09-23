@@ -7,10 +7,10 @@
 - [Dependency](#dependency)
 - [How to use](#how-to-use)
   - [Example](#example)
+- [Disclaimer](#disclaimer)
 - [You may like...](#you-may-like)
   - [Don't like twist.moe? Want an alternative?](#dont-like-twistmoe-want-an-alternative)
   - [What to know when the new episode of your favorite anime will be released?](#what-to-know-when-the-new-episode-of-your-favorite-anime-will-be-released)
-- [Disclaimer](#disclaimer)
 
 ## Dependency
 
@@ -66,6 +66,10 @@ Options:
 ~$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 2,3,4
 ```
 
+## Disclaimer
+
+The purpose of this script is to download anime episodes in order to watch them later in case when Internet is not available. Please do NOT copy or distribute downloaded anime episodes to any third party. Watch them and delete them afterwards. Please use this script at your own responsibility.
+
 ## You may like...
 
 ### Don't like twist.moe? Want an alternative?
@@ -75,10 +79,6 @@ Check out [animepahe-dl](https://github.com/KevCui/animepahe-dl)
 ### What to know when the new episode of your favorite anime will be released?
 
 Check out this script [tvdb-cli](https://github.com/KevCui/tvdb-cli)
-
-## Disclaimer
-
-The purpose of this script is to download anime episodes in order to watch them later in case when Internet is not available. Please do NOT copy or distribute downloaded anime episodes to any third party. Watch them and delete them afterwards. Please use this script at your own responsibility.
 
 ---
 
