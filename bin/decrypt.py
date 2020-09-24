@@ -3,7 +3,6 @@ from Crypto.Cipher import AES
 from hashlib import md5
 import argparse
 import base64
-import sys
 
 
 def unpad(data):
