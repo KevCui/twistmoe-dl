@@ -3,9 +3,10 @@
 # Download anime from twist.moe using CLI
 #
 #/ Usage:
-#/   ./twistmoe-dl.sh [-s <anime_slug>] [-e <episode_num1,num2...>]
+#/   ./twistmoe-dl.sh [-a <anime_name>] [-s <anime_slug>] [-e <episode_num1,num2...>]
 #/
 #/ Options:
+#/   -a <name>          Anime name
 #/   -s <slug>          Anime slug, can be found in $_ANIME_LIST_FILE
 #/   -e <num1,num2...>  Optional, episode number to download
 #/                      multiple episode numbers seperated by ","
@@ -35,8 +36,11 @@ set_var() {
 
 set_args() {
     expr "$*" : ".*--help" > /dev/null && usage
-    while getopts ":hs:e:" opt; do
+    while getopts ":ha:s:e:" opt; do
         case $opt in
+            a)
+                _INPUT_ANIME_NAME="$OPTARG"
+                ;;
             s)
                 _ANIME_SLUG="$OPTARG"
                 ;;
@@ -47,11 +51,26 @@ set_args() {
                 usage
                 ;;
             \?)
-                echo "[ERROR] Invalid option: -$OPTARG" >&2
-                usage
+                print_error "Invalid option: -$OPTARG"
                 ;;
         esac
     done
+}
+
+print_info() {
+    # $1: info message
+    printf "%b\n" "\033[32m[INFO]\033[0m $1" >&2
+}
+
+print_warn() {
+    # $1: warning message
+    printf "%b\n" "\033[33m[WARNING]\033[0m $1" >&2
+}
+
+print_rror() {
+    # $1: error message
+    printf "%b\n" "\033[31m[ERROR]\033[0m $1" >&2
+    exit 1
 }
 
 download_anime_list() {
@@ -69,7 +88,7 @@ get_episode_link() {
     local s
     s=$($_JQ -r '.[] | select(.number==($num | tonumber)) | .source' --arg num "$1" < "$_SCRIPT_PATH/$_ANIME_SLUG/$_SOURCE_FILE")
     if [[ "$s" == "" ]]; then
-        echo "[ERROR] Episode not found!" >&2 && exit 1
+        print_error "Episode not found!"
     else
         decrypt_source "$s"
     fi
@@ -93,10 +112,10 @@ download_episode() {
     local l
     l=$(get_episode_link "$1")
     if [[ "$l" != *"/"* ]]; then
-        echo "[ERROR] Wrong download link or episode not found!" >&2 && exit 1
+        print_error "Wrong download link or episode not found!"
     fi
 
-    echo "[INFO] Downloading Episode $1..."
+    print_info "Downloading Episode $1..."
     $_CURL -L -g -o "$_SCRIPT_PATH/$_ANIME_SLUG/${_ANIME_SLUG}-${1}.mp4" "$_HOST/$l" \
         -H "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36'" \
         -H "Referer: $_HOST"
@@ -114,16 +133,25 @@ select_episodes_to_download() {
     echo "$s"
 }
 
+remove_brackets() {
+    awk -F']' '{print $1}' | sed -E 's/^\[//'
+}
+
 main() {
     set_args "$@"
     set_var
 
+    if [[ -n "${_INPUT_ANIME_NAME:-}" ]]; then
+        download_anime_list
+        _ANIME_SLUG=$($_FZF -1 -e -q "$_INPUT_ANIME_NAME" < "$_ANIME_LIST_FILE" | remove_brackets)
+    fi
+
     if [[ -z "${_ANIME_SLUG:-}" ]]; then
         download_anime_list
         if [[ ! -f "$_ANIME_LIST_FILE" ]]; then
-            echo "[ERROR] $_ANIME_LIST_FILE not found!" && exit 1
+            print_error "$_ANIME_LIST_FILE not found!"
         fi
-        _ANIME_SLUG=$($_FZF < "$_ANIME_LIST_FILE" | awk -F']' '{print $1}' | sed -E 's/^\[//')
+        _ANIME_SLUG=$($_FZF < "$_ANIME_LIST_FILE" | remove_brackets)
 
         if [[ "$_ANIME_SLUG" == "" ]]; then
             exit 0

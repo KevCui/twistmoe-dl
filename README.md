@@ -23,9 +23,10 @@
 
 ```
 Usage:
-  ./twistmoe-dl.sh [-s <anime_slug>] [-e <episode_num1,num2...>]
+  ./twistmoe-dl.sh [-a <anime_name>] [-s <anime_slug>] [-e <episode_num1,num2...>]
 
 Options:
+  -a <name>          Anime name
   -s <slug>          Anime slug, can be found in $_ANIME_LIST_FILE
   -e <num1,num2...>  Optional, episode number to download
                      multiple episode numbers seperated by ","
@@ -34,7 +35,17 @@ Options:
 
 ### Example
 
-- In case, you don't know anime slug, simply run script. Search and select the right one in fzf:
+- Download "Attack on Titan OVA" by anime name:
+
+```
+~$ ./twistmoe-dl.sh -a 'attack on titan ova'
+[1] E1 2019-08-02 18:10:24
+[2] E2 2019-08-02 18:10:24
+[3] E3 2019-08-02 18:10:24
+Which episode(s) to downolad:
+```
+
+- In case, you don't know anime slug, simply run script. Search and select the right one in `fzf`:
 
 ```
 ~$ ./twistmoe-dl.sh
