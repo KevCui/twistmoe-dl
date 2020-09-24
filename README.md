@@ -23,14 +23,15 @@
 
 ```
 Usage:
-  ./twistmoe-dl.sh [-a <anime_name>] [-s <anime_slug>] [-e <episode_num1,num2...>]
+  ./twistmoe-dl.sh [-a <anime_name>] [-s <anime_slug>] [-e <episode_num1,num2,num3-num4...>]
 
 Options:
-  -a <name>          Anime name
-  -s <slug>          Anime slug, can be found in $_ANIME_LIST_FILE
-  -e <num1,num2...>  Optional, episode number to download
-                     multiple episode numbers seperated by ","
-  -h | --help        Display this help message
+  -a <name>               Anime name
+  -s <slug>               Anime slug, can be found in $_ANIME_LIST_FILE
+  -e <num1,num3-num4...>  Optional, episode number to download
+                          multiple episode numbers seperated by ","
+                          episode range using "-"
+  -h | --help             Display this help message
 ```
 
 ### Example
@@ -71,10 +72,16 @@ Which episode(s) to downolad:
 ...
 ```
 
-- Support batch downloads: list "Attack on Titan" season 3 episode 2, 3, 4:
+- Support batch downloads: list "Attack on Titan" season 3 episode 1, 3, 4, 5:
 
 ```
-~$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 2,3,4
+~$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 1,3,4,5
+```
+
+OR using episode range:
+
+```
+~$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 1,3-5
 ```
 
 ## Disclaimer
