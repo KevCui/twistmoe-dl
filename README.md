@@ -36,32 +36,33 @@ Options:
 
 ### Example
 
-- Download "Attack on Titan OVA" by anime name:
+- Simply run script to search anime name and select the right one in `fzf`:
 
+```bash
+$ ./twistmoe-dl.sh
+<anime list in fzf>
 ```
-~$ ./twistmoe-dl.sh -a 'attack on titan ova'
+
+- Search anime by its name:
+
+```bash
+$ ./twistmoe-dl.sh -a 'attack on titan ova'
 [1] E1 2019-08-02 18:10:24
 [2] E2 2019-08-02 18:10:24
 [3] E3 2019-08-02 18:10:24
 Which episode(s) to downolad:
 ```
 
-- In case, you don't know anime slug, simply run script. Search and select the right one in `fzf`:
-
-```
-~$ ./twistmoe-dl.sh
-```
-
 - Download "Attack on Titan" season 3 episode 1:
 
-```
-~$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 3
+```bash
+$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 3
 ```
 
 - List "Attack on Titan" season 3 all episodes:
 
-```
-~$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3
+```bash
+$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3
 [1] E1 2018-07-22 23:20:16
 [2] E2 2018-07-30 00:52:31
 [3] E3 2018-08-05 23:30:13
@@ -74,14 +75,14 @@ Which episode(s) to downolad:
 
 - Support batch downloads: list "Attack on Titan" season 3 episode 1, 3, 4, 5:
 
-```
-~$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 1,3,4,5
+```bash
+$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 1,3,4,5
 ```
 
 OR using episode range:
 
-```
-~$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 1,3-5
+```bash
+$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 1,3-5
 ```
 
 ## Disclaimer
