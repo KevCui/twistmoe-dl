@@ -68,7 +68,7 @@ print_warn() {
     printf "%b\n" "\033[33m[WARNING]\033[0m $1" >&2
 }
 
-print_rror() {
+print_error() {
     # $1: error message
     printf "%b\n" "\033[31m[ERROR]\033[0m $1" >&2
     exit 1
