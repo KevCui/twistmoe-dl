@@ -31,6 +31,7 @@ Options:
   -e <num1,num3-num4...>  Optional, episode number to download
                           multiple episode numbers seperated by ","
                           episode range using "-"
+                          all episode using "*"
   -h | --help             Display this help message
 ```
 
@@ -83,6 +84,12 @@ OR using episode range:
 
 ```bash
 $ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e 1,3-5
+```
+
+- Download all episodes using `*`:
+
+```bash
+$ ./twistmoe-dl.sh -s shingeki-no-kyojin-season-3 -e '*'
 ```
 
 ## Disclaimer

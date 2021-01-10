@@ -11,6 +11,7 @@
 #/   -e <num1,num3-num4...>  Optional, episode number to download
 #/                           multiple episode numbers seperated by ","
 #/                           episode range using "-"
+#/                           all episodes using "*"
 #/   -h | --help             Display this help message
 
 set -e
@@ -109,6 +110,12 @@ download_episodes() {
 
     el=()
     for i in "${origel[@]}"; do
+        if [[ "$i" == *"*"* ]]; then
+            i="1-$("$_JQ" -r '.[].number' "$_SCRIPT_PATH/$_ANIME_SLUG/$_SOURCE_FILE" \
+                   | sort -nu \
+                   | tail -1)"
+        fi
+
         if [[ "$i" == *"-"* ]]; then
             s=$(awk -F '-' '{print $1}' <<< "$i")
             e=$(awk -F '-' '{print $2}' <<< "$i")
@@ -149,7 +156,7 @@ decrypt_source() {
 }
 
 select_episodes_to_download() {
-    $_JQ -r '.[] | "[\(.number)] E\(.number) \(.updated_at)"' < "$_SCRIPT_PATH/$_ANIME_SLUG/$_SOURCE_FILE" >&2
+    $_JQ -r '.[] | "[\(.number)] E\(.number) \(.updated_at)"' "$_SCRIPT_PATH/$_ANIME_SLUG/$_SOURCE_FILE" >&2
     echo -n "Which episode(s) to downolad: " >&2
     read -r s
     echo "$s"
