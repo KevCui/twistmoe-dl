@@ -43,7 +43,7 @@ def main():
     parser.add_argument('-f', '--file', nargs=1, dest='file', help='encrypted file')
 
     args = parser.parse_args()
-    KEY = b"LXgIVP&PorO68Rq7dTx8N^lP!Fa5sGJ^*XK"
+    KEY = b"267041df55ca2b36f2e322d05ee2c9cf"
 
     if args.string:
         print_decrypted_text(args.string[0], KEY)

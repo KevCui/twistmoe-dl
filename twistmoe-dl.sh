@@ -29,8 +29,9 @@ set_var() {
     _DECRYPT_SCRIPT="$_SCRIPT_PATH/bin/decrypt.py"
 
     _HOST="https://twist.moe"
+    _HOST_CDN="https://cdn.twist.moe"
     _API_URL="$_HOST/api/anime"
-    _ACCESS_TOKEN="1rj2vRtegS8Y60B3w3qNZm5T2Q0TN2NR"
+    _ACCESS_TOKEN="0df14814b9e590a1f26d3071a4ed7974"
 
     _ANIME_LIST_FILE="$_SCRIPT_PATH/anime.list"
     _SOURCE_FILE=".source.json"
@@ -76,13 +77,13 @@ print_error() {
 }
 
 download_anime_list() {
-    $_CURL -sS "$_API_URL" -H "x-access-token: $_ACCESS_TOKEN" \
+    $_CURL -sS -L "$_API_URL" -H "x-access-token: $_ACCESS_TOKEN" \
         | $_JQ -r '.[] | "[\(.slug.slug)] \(.title)\(if .alt_title != null then " (\(.alt_title))" else "" end)"' > "$_ANIME_LIST_FILE"
 }
 
 download_source() {
     mkdir -p "$_SCRIPT_PATH/$_ANIME_SLUG"
-    $_CURL -sS "$_API_URL/$_ANIME_SLUG/sources" -H "x-access-token: $_ACCESS_TOKEN" > "$_SCRIPT_PATH/$_ANIME_SLUG/$_SOURCE_FILE"
+    $_CURL -sS -L "$_API_URL/$_ANIME_SLUG/sources" -H "x-access-token: $_ACCESS_TOKEN" > "$_SCRIPT_PATH/$_ANIME_SLUG/$_SOURCE_FILE"
 }
 
 get_episode_link() {
@@ -145,7 +146,7 @@ download_episode() {
     fi
 
     print_info "Downloading Episode $1..."
-    $_CURL -L -g -o "$_SCRIPT_PATH/$_ANIME_SLUG/${_ANIME_SLUG}-${1}.mp4" "$_HOST/$l" \
+    $_CURL -L -g -o "$_SCRIPT_PATH/$_ANIME_SLUG/${_ANIME_SLUG}-${1}.mp4" "$_HOST_CDN${l}" \
         -H "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36" \
         -H "Referer: $_HOST"
 }
